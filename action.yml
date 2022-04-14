@@ -34,7 +34,7 @@ runs:
       run: |
         from datetime import date
 
-        old_tag = '${{ steps.old-tag.outputs.tag }}'
+        old_tag = '${{ steps.old-tag-step.outputs.tag }}'
 
         if old_tag:
           year, build = [int(x) if x.isdigit() else 0 for x in old_tag.split('.', maxsplit=1)]
