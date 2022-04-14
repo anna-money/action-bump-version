@@ -18,55 +18,55 @@ outputs:
     value: ${{ steps.old-tag-step.outputs.tag }}
 runs:
   using: composite
-    steps:
-      - name: Get existing comment
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.x'
-      - name: Get current tag
-        id: old-tag-step
-        run: |
-          echo ::set-output name=tag::"$(git describe --tags --first-parent --abbrev=0)"
-      - name: Get new tag
-        id: new-tag-step
-        shell: python
-        run: |
-          import re
-          from datetime import date
+steps:
+  - name: Get existing comment
+    uses: actions/checkout@v3
+    with:
+      fetch-depth: 0
+  - name: Setup python
+    uses: actions/setup-python@v3
+    with:
+      python-version: '3.x'
+  - name: Get current tag
+    id: old-tag-step
+    run: |
+      echo ::set-output name=tag::"$(git describe --tags --first-parent --abbrev=0)"
+  - name: Get new tag
+    id: new-tag-step
+    shell: python
+    run: |
+      import re
+      from datetime import date
 
-          old_tag = '${{ steps.old-tag.outputs.tag }}'
-          with_month = '${{ inputs.with_month }}' == 'true'
-          today = date.today()
+      old_tag = '${{ steps.old-tag.outputs.tag }}'
+      with_month = '${{ inputs.with_month }}' == 'true'
+      today = date.today()
 
-          if with_month:
-            # e.g. 2022.5.10
-            if re.match(r'\d{4}\.\d{1,2}\.\d+', old_tag):
-              year, month, build = map(int, old_tag.split('.'))
-            else:
-              year, month, build = 0, 0, 0
-            if today.year != year or today.month != month:
-              build = 0
-            build += 1
-            new_tag = f'{today.year}.{today.month}.{build}'
+      if with_month:
+        # e.g. 2022.5.10
+        if re.match(r'\d{4}\.\d{1,2}\.\d+', old_tag):
+          year, month, build = map(int, old_tag.split('.'))
+        else:
+          year, month, build = 0, 0, 0
+        if today.year != year or today.month != month:
+          build = 0
+        build += 1
+        new_tag = f'{today.year}.{today.month}.{build}'
 
-          else:
-            # e.g. 2022.146
-            if old_tag:
-              year, build = [int(x) if x.isdigit() else 0 for x in old_tag.split('.', maxsplit=1)]
-            else:
-              year, build  = 0, 0
-            if today.year != year:
-              build = 0
-            build += 1
-            new_tag = f'{today.year}.{build}'
+      else:
+        # e.g. 2022.146
+        if old_tag:
+          year, build = [int(x) if x.isdigit() else 0 for x in old_tag.split('.', maxsplit=1)]
+        else:
+          year, build  = 0, 0
+        if today.year != year:
+          build = 0
+        build += 1
+        new_tag = f'{today.year}.{build}'
 
-          print(f'::set-output name=tag::{new_tag}')
-      - name: GitHub tag bump
-        uses: anothrNick/github-tag-action@37ff4873ee1e9b43cb25a7817cb15b2128536b84 # 1.38.0
-        env:
-          GITHUB_TOKEN: ${{ inputs.token }}
-          CUSTOM_TAG: ${{ steps.new-tag-step.outputs.tag }}
+        print(f'::set-output name=tag::{new_tag}')
+    - name: GitHub tag bump
+      uses: anothrNick/github-tag-action@37ff4873ee1e9b43cb25a7817cb15b2128536b84 # 1.38.0
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+        CUSTOM_TAG: ${{ steps.new-tag-step.outputs.tag }}
