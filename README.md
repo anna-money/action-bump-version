@@ -7,7 +7,7 @@ Gets the latest release version and increases it.
 ### Example workflow to release a new version with auto-incrementing version number
 
 ```yaml
-    - uses: anna-money/action-comment@master
+    - uses: anna-money/action-bump-version@master
       id: bump
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
