@@ -28,6 +28,7 @@ runs:
       with:
         python-version: '3.x'
     - name: Get current tag
+      shell: bash
       id: old-tag-step
       run: |
         echo ::set-output name=tag::"$(git describe --tags --first-parent --abbrev=0)"
@@ -65,8 +66,8 @@ runs:
           new_tag = f'{today.year}.{build}'
 
           print(f'::set-output name=tag::{new_tag}')
-      - name: GitHub tag bump
-        uses: anothrNick/github-tag-action@37ff4873ee1e9b43cb25a7817cb15b2128536b84 # 1.38.0
-        env:
-          GITHUB_TOKEN: ${{ inputs.token }}
-          CUSTOM_TAG: ${{ steps.new-tag-step.outputs.tag }}
+    - name: GitHub tag bump
+      uses: anothrNick/github-tag-action@37ff4873ee1e9b43cb25a7817cb15b2128536b84 # 1.38.0
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+        CUSTOM_TAG: ${{ steps.new-tag-step.outputs.tag }}
