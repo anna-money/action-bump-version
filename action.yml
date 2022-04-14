@@ -9,6 +9,10 @@ inputs:
     required: false
     type: boolean
     default: false
+  add_tag:
+    required: false
+    type: boolean
+    default: true
 outputs:
   new_tag:
     description: 'Generated tag'
@@ -67,6 +71,7 @@ runs:
 
         print(f'::set-output name=tag::{new_tag}')
     - name: GitHub tag bump
+      if: ${{ inputs.add_tag }}
       uses: anothrNick/github-tag-action@37ff4873ee1e9b43cb25a7817cb15b2128536b84 # 1.38.0
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
