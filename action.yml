@@ -65,7 +65,7 @@ runs:
           build += 1
           new_tag = f'{today.year}.{build}'
 
-          print(f'::set-output name=tag::{new_tag}')
+        print(f'::set-output name=tag::{new_tag}')
     - name: GitHub tag bump
       uses: anothrNick/github-tag-action@37ff4873ee1e9b43cb25a7817cb15b2128536b84 # 1.38.0
       env:
