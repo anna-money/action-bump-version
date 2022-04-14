@@ -41,7 +41,7 @@ runs:
         import re
         from datetime import date
 
-        old_tag = '${{ steps.old-tag.outputs.tag }}'
+        old_tag = '${{ steps.old-tag-step.outputs.tag }}'
         with_month = '${{ inputs.with_month }}' == 'true'
         today = date.today()
 
