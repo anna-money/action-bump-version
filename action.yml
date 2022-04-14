@@ -7,9 +7,11 @@ inputs:
     required: true
   with_month:
     description: Add the month number as a second part of the tag.
+    type: boolean
     default: false
   add_tag:
     description: Add a tag to the commit.
+    type: boolean
     default: true
 outputs:
   new_tag:
@@ -69,7 +71,7 @@ runs:
 
         print(f'::set-output name=tag::{new_tag}')
     - name: GitHub tag bump
-      if: inputs.add_tag == true
+      if: inputs.add_tag
       uses: anothrNick/github-tag-action@37ff4873ee1e9b43cb25a7817cb15b2128536b84 # 1.38.0
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
