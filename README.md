@@ -2,7 +2,7 @@
 
 Gets the latest release version and increases it.
 
-## Options
+## Input Variables
 
 - **token** (`string`, required) - The GitHub token.
 - **with_month** (`true|false`, optional) - Add the month number as a second part of the tag (e.g. 2022.5.10) (
