@@ -6,10 +6,10 @@ inputs:
     description: Required for permission to tag the repo.
     required: true
   with_month:
-    type: boolean
+    description: Add month number as a secont part of the tag.
     default: false
   add_tag:
-    type: boolean
+    description: Add tag to the commit.
     default: true
 outputs:
   new_tag:
