@@ -7,7 +7,7 @@ Gets the latest release version and increases it.
 - **token** (`string`, required) - The GitHub token.
 - **with_month** (`true|false`, optional) - Add the month number as a second part of the tag (e.g. 2022.5.10) (
   default: `false`).
-- **add_tag** (`true|false`, optional) - Add a tag to the commit (default: `false`).
+- **add_tag** (`true|false`, optional) - Add a tag to the commit (default: `true`).
 
 ## Examples
 
