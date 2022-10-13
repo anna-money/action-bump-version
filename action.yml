@@ -33,11 +33,12 @@ runs:
       shell: bash
       id: old-tag-step
       run: |
-        echo ::set-output name=tag::"$(git describe --tags --first-parent --abbrev=0)"
+        echo "tag=$(git describe --tags --first-parent --abbrev=0)" >> $GITHUB_OUTPUT
     - name: Get new tag
       id: new-tag-step
       shell: python
       run: |
+        import os
         import re
         from datetime import date
 
@@ -67,7 +68,8 @@ runs:
           build += 1
           new_tag = f'{today.year}.{build}'
 
-        print(f'::set-output name=tag::{new_tag}')
+        with open(os.getenv("GITHUB_OUTPUT"), 'w') as f:
+            print(f'tag={new_tag}', file=f)
     - name: GitHub tag bump
       if: inputs.add_tag == 'true'
       uses: anothrNick/github-tag-action@37ff4873ee1e9b43cb25a7817cb15b2128536b84 # 1.38.0
