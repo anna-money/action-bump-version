@@ -72,7 +72,7 @@ runs:
             print(f'tag={new_tag}', file=f)
     - name: GitHub tag bump
       if: inputs.add_tag == 'true'
-      uses: anothrNick/github-tag-action@a0e0d8b5e319191508879013f597692a761c3aa2 # 1.38.0
+      uses: anothrNick/github-tag-action@11ca9400dccfc808a84c96f9068bc58731336ac3 # 1.38.0
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
         CUSTOM_TAG: ${{ steps.new-tag-step.outputs.tag }}
