@@ -4,9 +4,11 @@ on:
   push:
     branches: [ master ]
 
+concurrency: ${{ github.ref }}
+
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: anna-money/action-bump-version@master
         id: bump

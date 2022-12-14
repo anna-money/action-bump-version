@@ -25,6 +25,17 @@ runs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: Search for existing tag
+      id: find-tag
+      shell: bash
+      run: |
+        echo "tag=$(git tag -l --points-at ${{ github.event.pull_request.head.sha || github.sha }})" >> $GITHUB_OUTPUT
+    - name: Raise error if tag already exists
+      if: ${{ steps.find-tag.outputs.tag }}
+      uses: actions/github-script@v6
+      with:
+        script: |
+          core.setFailed('Tag (${{ steps.find-tag.outputs.tag }}) already exists on current commit (${{ github.event.pull_request.head.sha || github.sha }})')
     - name: Setup python
       uses: actions/setup-python@v4
       with:
