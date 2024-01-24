@@ -37,7 +37,7 @@ runs:
         script: |
           core.setFailed('Tag (${{ steps.find-tag.outputs.tag }}) already exists on current commit (${{ github.event.pull_request.head.sha || github.sha }})')
     - name: Setup python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
     - name: Get current tag
