@@ -32,7 +32,7 @@ runs:
         echo "tag=$(git tag -l --points-at ${{ github.event.pull_request.head.sha || github.sha }})" >> $GITHUB_OUTPUT
     - name: Raise error if tag already exists
       if: ${{ steps.find-tag.outputs.tag }}
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       with:
         script: |
           core.setFailed('Tag (${{ steps.find-tag.outputs.tag }}) already exists on current commit (${{ github.event.pull_request.head.sha || github.sha }})')
