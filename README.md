@@ -24,3 +24,4 @@ Gets the latest release version and increases it.
     - run: echo ${{ steps.bump.outputs.old_tag }}
 
 ```
+a
